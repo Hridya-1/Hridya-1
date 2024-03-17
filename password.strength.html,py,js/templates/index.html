@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Strength Checker</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Password Strength Checker</h2>
+        <div class="inputBox">
+            <input type="password" placeholder="Enter your password" id="password" oninput="checkPasswordStrength()">
+        </div>
+        <div class="strengthMeter" id="result"></div>
+    </div>
+
+    <script>
+        function checkPasswordStrength() {
+            var password = document.getElementById("password").value;
+            
+            $.ajax({
+                url: '/generate_password',
+                type: 'GET',
+                data: { password: password },
+                success: function(response) {
+                    document.getElementById("result").innerText = response.strength;
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
